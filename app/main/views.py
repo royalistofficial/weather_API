@@ -14,8 +14,7 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 
-async def fetch_weather_data(user_city):
-    city = user_city.city
+async def fetch_weather_data(city):
     try:
         logger.info(f"Получение данных о погоде для города: {city.name}")
         weather_data = await get_weather_data(city.latitude, city.longitude)
@@ -42,7 +41,7 @@ async def index(request):
         return []
     user_cities = await get_user_cities(request.user)
 
-    tasks = [fetch_weather_data(user_city) for user_city in user_cities]
+    tasks = [fetch_weather_data(user_city.city) for user_city in user_cities]
     results = await asyncio.gather(*tasks)
 
     cities_weather_data = {
@@ -54,12 +53,6 @@ async def index(request):
     
     html = await sync_to_async(render)(request, 'index.html', user_data)
 
-    return html
-
-
-async def about(request):
-    logger.debug(f"Запрос about")
-    html = await sync_to_async(render)('about.html', request=request)
     return html
 
 

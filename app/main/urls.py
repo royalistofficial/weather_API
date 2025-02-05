@@ -22,7 +22,6 @@ app_name = 'main'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('about/', views.about, name='about'),
     path('weather/', views.weather_view, name='weather'),
     path('city_weather/', views.city_weather, name='city_weather'),
     path('add_city/', views.add_city, name='add_city'),
