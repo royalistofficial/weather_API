@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <h1>Добро пожаловать, {{ user.username }}!</h1>
+
+    <p><a href="{% url 'main:weather' %}">weather</a></p>
+    <p><a href="{% url 'main:add_city' %}">add_city</a></p>
+    <p><a href="{% url 'main:city_weather' %}">city_weather</a></p>
+
+    <h2>Ваши города и погода:</h2>
+    <ul>
+        {% for city_name, data in cities_weather_data.items %}
+            <li>
+                <strong>{{ city_name }}</strong><br>
+                Широта: {{ data.city.latitude }}, Долгота: {{ data.city.longitude }}<br>
+                Температура: {{ data.weather.temperature }} °C<br>
+                Скорость ветра: {{ data.weather.wind_speed }} м/с<br>
+                Давление: {{ data.weather.pressure }} мбар
+                <a href="{% url 'main:delete_city' data.city.id %}" onclick="return confirm('Вы уверены?');">Удалить</a>
+            </li>
+        {% empty %}
+            <li>У вас нет добавленных городов.</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}
+св

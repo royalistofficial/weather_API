@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <h1>Выбор даты и параметров</h1>
+    
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
+                {{ form.start_date }}
+                {% if form.start_date.errors %}
+                    <div class="error">{{ form.start_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                {{ form.end_date }}
+                {% if form.end_date.errors %}
+                    <div class="error">{{ form.end_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.cities.id_for_label }}">{{ form.cities.label }}</label>
+                {{ form.cities }}
+                {% if form.cities.errors %}
+                    <div class="error">{{ form.cities.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label>{{ form.parameters.label }}</label>
+                {{ form.parameters }}
+                {% if form.parameters.errors %}
+                    <div class="error">{{ form.parameters.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit">Отправить</button>
+        </form>
+        
+        <h1>Weather Data</h1>
+        <table>
+            <thead>
+                <tr>
+                    {% for column in hourly_dataframe.columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in hourly_dataframe.values %}
+                    <tr>
+                        {% for value in row %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

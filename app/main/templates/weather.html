@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <h2>Получить данные о погоде</h2>
+    <form method="get" action="{% url 'main:weather' %}">
+        <label for="city">Выберите город:</label>
+        <select id="city" name="city" onchange="updateCoordinates()">
+            <option value="">-- Выберите город --</option>
+            {% for city, coords in cities.items %}
+                <option value="{{ city }}" data-latitude="{{ coords.latitude }}" data-longitude="{{ coords.longitude }}">
+                    {{ city }}
+                </option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="latitude">Широта:</label>
+        <input type="text" id="latitude" name="latitude" required>
+        <br>
+        <label for="longitude">Долгота:</label>
+        <input type="text" id="longitude" name="longitude" required>
+        <br>
+        <button type="submit">Получить погоду</button>
+    </form>
+
+    {% if temperature %}
+        <h3>Текущая погода:</h3>
+        <p>Температура: {{ temperature }} °C</p>
+        <p>Скорость ветра: {{ wind_speed }} м/с</p>
+        <p>Атмосферное давление: {{ pressure }} гПа</p>
+    {% elif error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <script>
+        function updateCoordinates() {
+            const select = document.getElementById('city');
+            const selectedOption = select.options[select.selectedIndex];
+
+            if (selectedOption.value) {
+                const latitude = selectedOption.getAttribute('data-latitude');
+                const longitude = selectedOption.getAttribute('data-longitude');
+
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+            } else {
+                document.getElementById('latitude').value = '';
+                document.getElementById('longitude').value = '';
+            }
+        }
+    </script>
+{% endblock %}
