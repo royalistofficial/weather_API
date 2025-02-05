@@ -8,9 +8,9 @@
     {% if user.is_authenticated %}
     <h1>Добро пожаловать, {{ user.username }}!</h1>
 
-    <p><a href="{% url 'main:weather' %}">weather</a></p>
-    <p><a href="{% url 'main:add_city' %}">add_city</a></p>
-    <p><a href="{% url 'main:city_weather' %}">city_weather</a></p>
+    <p><a href="{% url 'main:weather' %}">Погода по координатам</a></p>
+    <p><a href="{% url 'main:add_city' %}">Добавить новый город</a></p>
+    <p><a href="{% url 'main:city_weather' %}">погода в городе по времени</a></p>
 
     <h2>Ваши города и погода:</h2>
     <ul>

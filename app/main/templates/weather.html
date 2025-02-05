@@ -25,6 +25,8 @@
         <button type="submit">Получить погоду</button>
     </form>
 
+    <a href="{% url 'main:index' %}">Назад к списку городов</a>
+
     {% if temperature %}
         <h3>Текущая погода:</h3>
         <p>Температура: {{ temperature }} °C</p>

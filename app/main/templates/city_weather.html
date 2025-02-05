@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Выбор даты и параметров</h1>
     
     {% if user.is_authenticated %}
+        <h1>Выбор даты и параметров</h1>
         <form method="post">
             {% csrf_token %}
             <div>
@@ -43,8 +43,10 @@
 
             <button type="submit">Отправить</button>
         </form>
+
+        <a href="{% url 'main:index' %}">Назад к списку городов</a>
         
-        <h1>Weather Data</h1>
+        <h1>Данные о погоде</h1>
         <table>
             <thead>
                 <tr>
@@ -63,5 +65,6 @@
                 {% endfor %}
             </tbody>
         </table>
+        
     {% endif %}
 {% endblock %}

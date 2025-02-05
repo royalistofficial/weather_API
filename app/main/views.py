@@ -216,7 +216,7 @@ async def city_weather(request):
     form = await get_date_range_form(None, request.user)
     if request.method == 'POST':
         form = await sync_to_async(DateRangeForm)(request.POST, user=request.user)
-        if form.is_valid():
+        if await sync_to_async(form.is_valid)():
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             selected_cities = form.cleaned_data['cities']
